@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +12,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use App\Http\Controllers\BlogController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::controller(BlogController::class)->group(function() {
+    Route::get( '/', 'blogPage' )->name( 'home' );
+    Route::get( '/blog/details/{id}', 'blogDetails' )->name( 'blog.details' );
+
+    //Ajax route
+    Route::get( '/allBlog', 'allBlog' );
+    Route::post( '/comment', 'comment' );
+} );
